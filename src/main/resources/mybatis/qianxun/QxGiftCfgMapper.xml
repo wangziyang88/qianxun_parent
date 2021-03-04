@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianxun.project.qxun.mapper.QxGiftCfgMapper">
+    
+    <resultMap type="com.qianxun.project.qxun.domain.QxGiftCfg" id="QxGiftCfgResult">
+        <result property="id"    column="id"    />
+        <result property="grade"    column="grade"    />
+        <result property="gcNum"    column="gc_num"    />
+        <result property="etRatio"    column="et_ratio"    />
+        <result property="rec1"    column="rec1"    />
+        <result property="rec3"    column="rec3"    />
+        <result property="rec7"    column="rec7"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectQxGiftCfgVo">
+        select id, grade, gc_num, et_ratio, rec1, rec3, rec7, create_time, update_time from qx_gift_cfg
+    </sql>
+
+    <select id="selectQxGiftCfgList" parameterType="com.qianxun.project.qxun.domain.QxGiftCfg" resultMap="QxGiftCfgResult">
+        <include refid="selectQxGiftCfgVo"/>
+        <where>  
+            <if test="grade != null  and grade != ''"> and grade = #{grade}</if>
+            <if test="gcNum != null "> and gc_num = #{gcNum}</if>
+            <if test="etRatio != null "> and et_ratio = #{etRatio}</if>
+            <if test="rec1 != null "> and rec1 = #{rec1}</if>
+            <if test="rec3 != null "> and rec3 = #{rec3}</if>
+            <if test="rec7 != null "> and rec7 = #{rec7}</if>
+        </where>
+    </select>
+    
+    <select id="selectQxGiftCfgById" parameterType="Long" resultMap="QxGiftCfgResult">
+        <include refid="selectQxGiftCfgVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertQxGiftCfg" parameterType="com.qianxun.project.qxun.domain.QxGiftCfg" useGeneratedKeys="true" keyProperty="id">
+        insert into qx_gift_cfg
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="grade != null">grade,</if>
+            <if test="gcNum != null">gc_num,</if>
+            <if test="etRatio != null">et_ratio,</if>
+            <if test="rec1 != null">rec1,</if>
+            <if test="rec3 != null">rec3,</if>
+            <if test="rec7 != null">rec7,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="grade != null">#{grade},</if>
+            <if test="gcNum != null">#{gcNum},</if>
+            <if test="etRatio != null">#{etRatio},</if>
+            <if test="rec1 != null">#{rec1},</if>
+            <if test="rec3 != null">#{rec3},</if>
+            <if test="rec7 != null">#{rec7},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateQxGiftCfg" parameterType="com.qianxun.project.qxun.domain.QxGiftCfg">
+        update qx_gift_cfg
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="gcNum != null">gc_num = #{gcNum},</if>
+            <if test="etRatio != null">et_ratio = #{etRatio},</if>
+            <if test="rec1 != null">rec1 = #{rec1},</if>
+            <if test="rec3 != null">rec3 = #{rec3},</if>
+            <if test="rec7 != null">rec7 = #{rec7},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQxGiftCfgById" parameterType="Long">
+        delete from qx_gift_cfg where id = #{id}
+    </delete>
+
+    <delete id="deleteQxGiftCfgByIds" parameterType="String">
+        delete from qx_gift_cfg where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianxun.project.coin.mapper.CoinAccountMapper">
+    
+    <resultMap type="com.qianxun.project.coin.domain.CoinAccount" id="CoinAccountResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="coinId"    column="coin_id"    />
+        <result property="coinName"    column="coin_name"    />
+        <result property="available"    column="available"    />
+        <result property="frozen"    column="frozen"    />
+        <result property="lockup"    column="lockup"    />
+        <result property="version"    column="version"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectCoinAccountVo">
+        select id, user_id, coin_id, coin_name, available, frozen, lockup, version, create_time, update_time from coin_account
+    </sql>
+
+    <select id="selectCoinAccountList" parameterType="CoinAccount" resultMap="CoinAccountResult">
+        <include refid="selectCoinAccountVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="coinId != null "> and coin_id = #{coinId}</if>
+            <if test="coinName != null  and coinName != ''"> and coin_name = #{coinName}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectCoinAccountById" parameterType="Long" resultMap="CoinAccountResult">
+        <include refid="selectCoinAccountVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCoinAccount" parameterType="CoinAccount" useGeneratedKeys="true" keyProperty="id">
+        insert into coin_account
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="coinId != null">coin_id,</if>
+            <if test="coinName != null">coin_name,</if>
+            <if test="available != null">available,</if>
+            <if test="frozen != null">frozen,</if>
+            <if test="lockup != null">lockup,</if>
+            <if test="version != null">version,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="coinId != null">#{coinId},</if>
+            <if test="coinName != null">#{coinName},</if>
+            <if test="available != null">#{available},</if>
+            <if test="frozen != null">#{frozen},</if>
+            <if test="lockup != null">#{lockup},</if>
+            <if test="version != null">#{version},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCoinAccount" parameterType="CoinAccount">
+        update coin_account
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="coinId != null">coin_id = #{coinId},</if>
+            <if test="coinName != null">coin_name = #{coinName},</if>
+            <if test="available != null">available = #{available},</if>
+            <if test="frozen != null">frozen = #{frozen},</if>
+            <if test="lockup != null">lockup = #{lockup},</if>
+            <if test="version != null">version = #{version},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCoinAccountById" parameterType="Long">
+        delete from coin_account where id = #{id}
+    </delete>
+
+    <delete id="deleteCoinAccountByIds" parameterType="String">
+        delete from coin_account where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <select id="getByUserIdAndCoinId" resultMap="CoinAccountResult">
+        <include refid="selectCoinAccountVo"/>
+        where user_id = #{userId} and coin_id = #{userId}
+    </select>
+    
+    <update id="balanceChange">
+        update coin_account set 
+            available = #{available},
+            frozen = #{frozen}, 
+            lockup = #{lockup}, 
+            update_time = #{date},
+            version = version+1
+        where id = #{id} and version = #{version}
+    </update>
+    
+</mapper>

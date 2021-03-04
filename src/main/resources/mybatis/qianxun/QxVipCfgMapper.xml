@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianxun.project.qxun.mapper.QxVipCfgMapper">
+    
+    <resultMap type="QxVipCfg" id="QxVipCfgResult">
+        <result property="id"    column="id"    />
+        <result property="vipGrade"    column="vip_grade"    />
+        <result property="ratio"    column="ratio"    />
+        <result property="condition"    column="condition"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectQxVipCfgVo">
+        select id, vip_grade, ratio, `condition`, create_time, update_time from qx_vip_cfg
+    </sql>
+
+    <select id="selectQxVipCfgList" parameterType="com.qianxun.project.qxun.domain.QxVipCfg" resultMap="QxVipCfgResult">
+        <include refid="selectQxVipCfgVo"/>
+        <where>  
+            <if test="vipGrade != null  and vipGrade != ''"> and vip_grade = #{vipGrade}</if>
+            <if test="ratio != null "> and ratio = #{ratio}</if>
+            <if test="condition != null "> and `condition` = #{condition}</if>
+        </where>
+    </select>
+    
+    <select id="selectQxVipCfgById" parameterType="Long" resultMap="QxVipCfgResult">
+        <include refid="selectQxVipCfgVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertQxVipCfg" parameterType="com.qianxun.project.qxun.domain.QxVipCfg" useGeneratedKeys="true" keyProperty="id">
+        insert into qx_vip_cfg
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="vipGrade != null">vip_grade,</if>
+            <if test="ratio != null">ratio,</if>
+            <if test="condition != null">`condition`,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="vipGrade != null">#{vipGrade},</if>
+            <if test="ratio != null">#{ratio},</if>
+            <if test="condition != null">#{condition},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateQxVipCfg" parameterType="com.qianxun.project.qxun.domain.QxVipCfg">
+        update qx_vip_cfg
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="vipGrade != null">vip_grade = #{vipGrade},</if>
+            <if test="ratio != null">ratio = #{ratio},</if>
+            <if test="condition != null">`condition` = #{condition},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQxVipCfgById" parameterType="Long">
+        delete from qx_vip_cfg where id = #{id}
+    </delete>
+
+    <delete id="deleteQxVipCfgByIds" parameterType="String">
+        delete from qx_vip_cfg where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

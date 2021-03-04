@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianxun.project.coin.mapper.CoinTypeMapper">
+    
+    <resultMap type="CoinType" id="CoinTypeResult">
+        <result property="id"    column="id"    />
+        <result property="coinName"    column="coin_name"    />
+        <result property="coinFullName"    column="coin_full_name"    />
+        <result property="withdrawalMin"    column="withdrawal_min"    />
+        <result property="withdrawalFee"    column="withdrawal_fee"    />
+        <result property="withdrawalFeeRate"    column="withdrawal_fee_rate"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectCoinTypeVo">
+        select id, coin_name, coin_full_name, withdrawal_min, withdrawal_fee, withdrawal_fee_rate, status, create_time, update_time from coin_type
+    </sql>
+
+    <select id="selectCoinTypeList" parameterType="CoinType" resultMap="CoinTypeResult">
+        <include refid="selectCoinTypeVo"/>
+        <where>  
+            <if test="coinName != null  and coinName != ''"> and coin_name = #{coinName}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectCoinTypeById" parameterType="Long" resultMap="CoinTypeResult">
+        <include refid="selectCoinTypeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCoinType" parameterType="CoinType" useGeneratedKeys="true" keyProperty="id">
+        insert into coin_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="coinName != null">coin_name,</if>
+            <if test="coinFullName != null">coin_full_name,</if>
+            <if test="withdrawalMin != null">withdrawal_min,</if>
+            <if test="withdrawalFee != null">withdrawal_fee,</if>
+            <if test="withdrawalFeeRate != null">withdrawal_fee_rate,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="coinName != null">#{coinName},</if>
+            <if test="coinFullName != null">#{coinFullName},</if>
+            <if test="withdrawalMin != null">#{withdrawalMin},</if>
+            <if test="withdrawalFee != null">#{withdrawalFee},</if>
+            <if test="withdrawalFeeRate != null">#{withdrawalFeeRate},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCoinType" parameterType="CoinType">
+        update coin_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="coinName != null">coin_name = #{coinName},</if>
+            <if test="coinFullName != null">coin_full_name = #{coinFullName},</if>
+            <if test="withdrawalMin != null">coin_full_name = #{withdrawalMin},</if>
+            <if test="withdrawalFee != null">coin_full_name = #{withdrawalFee},</if>
+            <if test="withdrawalFeeRate != null">coin_full_name = #{withdrawalFeeRate},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCoinTypeById" parameterType="Long">
+        delete from coin_type where id = #{id}
+    </delete>
+
+    <delete id="deleteCoinTypeByIds" parameterType="String">
+        delete from coin_type where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

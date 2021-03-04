@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianxun.project.qxun.mapper.QxGiftRecMapper">
+    
+    <resultMap type="com.qianxun.project.qxun.domain.QxGiftRec" id="QxGiftRecResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="giftLevel"    column="gift_level"    />
+        <result property="gcNum"    column="gc_num"    />
+        <result property="etNum"    column="et_num"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectQxGiftRecVo">
+        select id, user_id, gift_level, gc_num, et_num, create_time, update_time from qx_gift_rec
+    </sql>
+
+    <select id="selectQxGiftRecList" parameterType="com.qianxun.project.qxun.domain.QxGiftRec" resultMap="QxGiftRecResult">
+        <include refid="selectQxGiftRecVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="giftLevel != null "> and gift_level = #{giftLevel}</if>
+            <if test="gcNum != null "> and gc_num = #{gcNum}</if>
+            <if test="etNum != null "> and et_num = #{etNum}</if>
+        </where>
+    </select>
+    
+    <select id="selectQxGiftRecById" parameterType="Long" resultMap="QxGiftRecResult">
+        <include refid="selectQxGiftRecVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertQxGiftRec" parameterType="com.qianxun.project.qxun.domain.QxGiftRec" useGeneratedKeys="true" keyProperty="id">
+        insert into qx_gift_rec
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="giftLevel != null">gift_level,</if>
+            <if test="gcNum != null">gc_num,</if>
+            <if test="etNum != null">et_num,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="giftLevel != null">#{giftLevel},</if>
+            <if test="gcNum != null">#{gcNum},</if>
+            <if test="etNum != null">#{etNum},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateQxGiftRec" parameterType="com.qianxun.project.qxun.domain.QxGiftRec">
+        update qx_gift_rec
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="giftLevel != null">gift_level = #{giftLevel},</if>
+            <if test="gcNum != null">gc_num = #{gcNum},</if>
+            <if test="etNum != null">et_num = #{etNum},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQxGiftRecById" parameterType="Long">
+        delete from qx_gift_rec where id = #{id}
+    </delete>
+
+    <delete id="deleteQxGiftRecByIds" parameterType="String">
+        delete from qx_gift_rec where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <select id="selectQxGiftRecByUserIdGcTotal" resultType="BigDecimal">
+        select IFNULL(SUM(gc_num),0) from qx_gift_rec
+        where user_id = #{userId}
+    </select>
+    
+</mapper>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianxun.project.qxun.mapper.QxShareRecMapper">
+    
+    <resultMap type="QxShareRec" id="QxShareRecResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="userGrade"    column="user_grade"    />
+        <result property="fromId"    column="from_id"    />
+        <result property="ratio"    column="ratio"    />
+        <result property="actualRatio"    column="actual_ratio"    />
+        <result property="era"    column="era"    />
+        <result property="num"    column="num"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectQxShareRecVo">
+        select id, user_id, user_grade, from_id, ratio, actual_ratio, era, num, create_time, update_time from qx_share_rec
+    </sql>
+
+    <select id="selectQxShareRecList" parameterType="com.qianxun.project.qxun.domain.QxShareRec" resultMap="QxShareRecResult">
+        <include refid="selectQxShareRecVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="userGrade != null "> and user_grade = #{userGrade}</if>
+            <if test="fromId != null "> and from_id = #{fromId}</if>
+            <if test="ratio != null "> and ratio = #{ratio}</if>
+            <if test="actualRatio != null "> and actual_ratio = #{actualRatio}</if>
+            <if test="era != null "> and era = #{era}</if>
+            <if test="num != null "> and num = #{num}</if>
+        </where>
+    </select>
+    
+    <select id="selectQxShareRecById" parameterType="Long" resultMap="QxShareRecResult">
+        <include refid="selectQxShareRecVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertQxShareRec" parameterType="com.qianxun.project.qxun.domain.QxShareRec" useGeneratedKeys="true" keyProperty="id">
+        insert into qx_share_rec
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="userGrade != null">user_grade,</if>
+            <if test="fromId != null">from_id,</if>
+            <if test="ratio != null">ratio,</if>
+            <if test="actualRatio != null">actual_ratio,</if>
+            <if test="era != null">era,</if>
+            <if test="num != null">num,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="userGrade != null">#{userGrade},</if>
+            <if test="fromId != null">#{fromId},</if>
+            <if test="ratio != null">#{ratio},</if>
+            <if test="actualRatio != null">#{actualRatio},</if>
+            <if test="era != null">#{era},</if>
+            <if test="num != null">#{num},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateQxShareRec" parameterType="com.qianxun.project.qxun.domain.QxShareRec">
+        update qx_share_rec
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="userGrade != null">user_grade = #{userGrade},</if>
+            <if test="fromId != null">from_id = #{fromId},</if>
+            <if test="ratio != null">ratio = #{ratio},</if>
+            <if test="actualRatio != null">actual_ratio = #{actualRatio},</if>
+            <if test="era != null">era = #{era},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQxShareRecById" parameterType="Long">
+        delete from qx_share_rec where id = #{id}
+    </delete>
+
+    <delete id="deleteQxShareRecByIds" parameterType="String">
+        delete from qx_share_rec where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

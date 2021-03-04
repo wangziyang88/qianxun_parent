@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianxun.project.otc.mapper.OtcGcOrderMapper">
+  <resultMap id="BaseResultMap" type="com.qianxun.project.otc.domain.OtcGcOrder">
+    <!--@mbg.generated-->
+    <!--@Table otc_gc_order-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="order_type" jdbcType="VARCHAR" property="orderType" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="gc_to_rmb" jdbcType="DECIMAL" property="gcToRmb" />
+    <result column="total_rmb" jdbcType="DECIMAL" property="totalRmb" />
+    <result column="gc_to_usdt" jdbcType="DECIMAL" property="gcToUsdt" />
+    <result column="total_usdt" jdbcType="DECIMAL" property="totalUsdt" />
+    <result column="reward_ratio" jdbcType="DECIMAL" property="rewardRatio" />
+    <result column="voucher_picture" jdbcType="VARCHAR" property="voucherPicture" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, order_no, user_id, order_type, amount, gc_to_rmb, total_rmb, gc_to_usdt, total_usdt, 
+    reward_ratio, voucher_picture, `status`, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from otc_gc_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from otc_gc_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.qianxun.project.otc.domain.OtcGcOrder" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into otc_gc_order (order_no, user_id, order_type, 
+      amount, gc_to_rmb, total_rmb, 
+      gc_to_usdt, total_usdt, reward_ratio, 
+      voucher_picture, `status`, create_time, 
+      update_time)
+    values (#{orderNo,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{orderType,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=DECIMAL}, #{gcToRmb,jdbcType=DECIMAL}, #{totalRmb,jdbcType=DECIMAL}, 
+      #{gcToUsdt,jdbcType=DECIMAL}, #{totalUsdt,jdbcType=DECIMAL}, #{rewardRatio,jdbcType=DECIMAL}, 
+      #{voucherPicture,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
+      #{updateTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.qianxun.project.otc.domain.OtcGcOrder" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into otc_gc_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="orderType != null">
+        order_type,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="gcToRmb != null">
+        gc_to_rmb,
+      </if>
+      <if test="totalRmb != null">
+        total_rmb,
+      </if>
+      <if test="gcToUsdt != null">
+        gc_to_usdt,
+      </if>
+      <if test="totalUsdt != null">
+        total_usdt,
+      </if>
+      <if test="rewardRatio != null">
+        reward_ratio,
+      </if>
+      <if test="voucherPicture != null">
+        voucher_picture,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="gcToRmb != null">
+        #{gcToRmb,jdbcType=DECIMAL},
+      </if>
+      <if test="totalRmb != null">
+        #{totalRmb,jdbcType=DECIMAL},
+      </if>
+      <if test="gcToUsdt != null">
+        #{gcToUsdt,jdbcType=DECIMAL},
+      </if>
+      <if test="totalUsdt != null">
+        #{totalUsdt,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardRatio != null">
+        #{rewardRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="voucherPicture != null">
+        #{voucherPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qianxun.project.otc.domain.OtcGcOrder">
+    <!--@mbg.generated-->
+    update otc_gc_order
+    <set>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="orderType != null">
+        order_type = #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="gcToRmb != null">
+        gc_to_rmb = #{gcToRmb,jdbcType=DECIMAL},
+      </if>
+      <if test="totalRmb != null">
+        total_rmb = #{totalRmb,jdbcType=DECIMAL},
+      </if>
+      <if test="gcToUsdt != null">
+        gc_to_usdt = #{gcToUsdt,jdbcType=DECIMAL},
+      </if>
+      <if test="totalUsdt != null">
+        total_usdt = #{totalUsdt,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardRatio != null">
+        reward_ratio = #{rewardRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="voucherPicture != null">
+        voucher_picture = #{voucherPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qianxun.project.otc.domain.OtcGcOrder">
+    <!--@mbg.generated-->
+    update otc_gc_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      order_type = #{orderType,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      gc_to_rmb = #{gcToRmb,jdbcType=DECIMAL},
+      total_rmb = #{totalRmb,jdbcType=DECIMAL},
+      gc_to_usdt = #{gcToUsdt,jdbcType=DECIMAL},
+      total_usdt = #{totalUsdt,jdbcType=DECIMAL},
+      reward_ratio = #{rewardRatio,jdbcType=DECIMAL},
+      voucher_picture = #{voucherPicture,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      update_time = #{updateTime,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update otc_gc_order
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="order_no = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.orderNo,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.userId,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="order_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.orderType,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="amount = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.amount,jdbcType=DECIMAL}
+        </foreach>
+      </trim>
+      <trim prefix="gc_to_rmb = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.gcToRmb,jdbcType=DECIMAL}
+        </foreach>
+      </trim>
+      <trim prefix="total_rmb = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.totalRmb,jdbcType=DECIMAL}
+        </foreach>
+      </trim>
+      <trim prefix="gc_to_usdt = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.gcToUsdt,jdbcType=DECIMAL}
+        </foreach>
+      </trim>
+      <trim prefix="total_usdt = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.totalUsdt,jdbcType=DECIMAL}
+        </foreach>
+      </trim>
+      <trim prefix="reward_ratio = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.rewardRatio,jdbcType=DECIMAL}
+        </foreach>
+      </trim>
+      <trim prefix="voucher_picture = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.voucherPicture,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=DATE}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=DATE}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into otc_gc_order
+    (order_no, user_id, order_type, amount, gc_to_rmb, total_rmb, gc_to_usdt, total_usdt, 
+      reward_ratio, voucher_picture, `status`, create_time, update_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.orderNo,jdbcType=VARCHAR}, #{item.userId,jdbcType=BIGINT}, #{item.orderType,jdbcType=VARCHAR}, 
+        #{item.amount,jdbcType=DECIMAL}, #{item.gcToRmb,jdbcType=DECIMAL}, #{item.totalRmb,jdbcType=DECIMAL}, 
+        #{item.gcToUsdt,jdbcType=DECIMAL}, #{item.totalUsdt,jdbcType=DECIMAL}, #{item.rewardRatio,jdbcType=DECIMAL}, 
+        #{item.voucherPicture,jdbcType=VARCHAR}, #{item.status,jdbcType=VARCHAR}, #{item.createTime,jdbcType=DATE}, 
+        #{item.updateTime,jdbcType=DATE})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.qianxun.project.otc.domain.OtcGcOrder" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into otc_gc_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      order_no,
+      user_id,
+      order_type,
+      amount,
+      gc_to_rmb,
+      total_rmb,
+      gc_to_usdt,
+      total_usdt,
+      reward_ratio,
+      voucher_picture,
+      `status`,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      #{orderNo,jdbcType=VARCHAR},
+      #{userId,jdbcType=BIGINT},
+      #{orderType,jdbcType=VARCHAR},
+      #{amount,jdbcType=DECIMAL},
+      #{gcToRmb,jdbcType=DECIMAL},
+      #{totalRmb,jdbcType=DECIMAL},
+      #{gcToUsdt,jdbcType=DECIMAL},
+      #{totalUsdt,jdbcType=DECIMAL},
+      #{rewardRatio,jdbcType=DECIMAL},
+      #{voucherPicture,jdbcType=VARCHAR},
+      #{status,jdbcType=VARCHAR},
+      #{createTime,jdbcType=DATE},
+      #{updateTime,jdbcType=DATE},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      order_type = #{orderType,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      gc_to_rmb = #{gcToRmb,jdbcType=DECIMAL},
+      total_rmb = #{totalRmb,jdbcType=DECIMAL},
+      gc_to_usdt = #{gcToUsdt,jdbcType=DECIMAL},
+      total_usdt = #{totalUsdt,jdbcType=DECIMAL},
+      reward_ratio = #{rewardRatio,jdbcType=DECIMAL},
+      voucher_picture = #{voucherPicture,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      update_time = #{updateTime,jdbcType=DATE},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.qianxun.project.otc.domain.OtcGcOrder" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into otc_gc_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="orderType != null">
+        order_type,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="gcToRmb != null">
+        gc_to_rmb,
+      </if>
+      <if test="totalRmb != null">
+        total_rmb,
+      </if>
+      <if test="gcToUsdt != null">
+        gc_to_usdt,
+      </if>
+      <if test="totalUsdt != null">
+        total_usdt,
+      </if>
+      <if test="rewardRatio != null">
+        reward_ratio,
+      </if>
+      <if test="voucherPicture != null">
+        voucher_picture,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="gcToRmb != null">
+        #{gcToRmb,jdbcType=DECIMAL},
+      </if>
+      <if test="totalRmb != null">
+        #{totalRmb,jdbcType=DECIMAL},
+      </if>
+      <if test="gcToUsdt != null">
+        #{gcToUsdt,jdbcType=DECIMAL},
+      </if>
+      <if test="totalUsdt != null">
+        #{totalUsdt,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardRatio != null">
+        #{rewardRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="voucherPicture != null">
+        #{voucherPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=DATE},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="orderType != null">
+        order_type = #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="gcToRmb != null">
+        gc_to_rmb = #{gcToRmb,jdbcType=DECIMAL},
+      </if>
+      <if test="totalRmb != null">
+        total_rmb = #{totalRmb,jdbcType=DECIMAL},
+      </if>
+      <if test="gcToUsdt != null">
+        gc_to_usdt = #{gcToUsdt,jdbcType=DECIMAL},
+      </if>
+      <if test="totalUsdt != null">
+        total_usdt = #{totalUsdt,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardRatio != null">
+        reward_ratio = #{rewardRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="voucherPicture != null">
+        voucher_picture = #{voucherPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectOtcGcOrderList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from otc_gc_order
+    <where>
+      <if test="userId != null "> and user_id = #{userId}</if>
+      <if test="id != null and id != ''  "> and id = #{id}</if>
+      <if test="orderType != null "> and id = #{id}</if>
+      <if test="status != null and status != ''  "> and status = #{status}</if>
+      <if test="createTime != null != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''">
+        and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+    </where>
+
+  </select>
+</mapper>

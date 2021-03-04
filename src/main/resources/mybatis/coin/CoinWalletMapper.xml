@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianxun.project.coin.mapper.CoinWalletMapper">
+    
+    <resultMap type="CoinWallet" id="CoinWalletResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="coinId"    column="coin_id"    />
+        <result property="coinName"    column="coin_name"    />
+        <result property="walletType"    column="wallet_type"    />
+        <result property="mainCoinType"    column="main_coin_type"    />
+        <result property="address"    column="address"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectCoinWalletVo">
+        select id, user_id, coin_id, coin_name, wallet_type, main_coin_type, address, create_time, update_time from coin_wallet
+    </sql>
+
+    <select id="selectCoinWalletList" parameterType="CoinWallet" resultMap="CoinWalletResult">
+        <include refid="selectCoinWalletVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="coinId != null "> and coin_id = #{coinId}</if>
+            <if test="coinName != null  and coinName != ''"> and coin_name = #{coinName}</if>
+            <if test="walletType != null  and walletType != ''"> and wallet_type = #{walletType}</if>
+            <if test="mainCoinType != null  and mainCoinType != ''"> and main_coin_type = #{mainCoinType}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectCoinWalletById" parameterType="Long" resultMap="CoinWalletResult">
+        <include refid="selectCoinWalletVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCoinWallet" parameterType="CoinWallet" useGeneratedKeys="true" keyProperty="id">
+        insert into coin_wallet
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="coinId != null">coin_id,</if>
+            <if test="coinName != null">coin_name,</if>
+            <if test="walletType != null">wallet_type,</if>
+            <if test="mainCoinType != null">main_coin_type,</if>
+            <if test="address != null">address,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="coinId != null">#{coinId},</if>
+            <if test="coinName != null">#{coinName},</if>
+            <if test="walletType != null">#{walletType},</if>
+            <if test="mainCoinType != null">#{mainCoinType},</if>
+            <if test="address != null">#{address},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCoinWallet" parameterType="CoinWallet">
+        update coin_wallet
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="coinId != null">coin_id = #{coinId},</if>
+            <if test="coinName != null">coin_name = #{coinName},</if>
+            <if test="walletType != null">wallet_type = #{walletType},</if>
+            <if test="mainCoinType != null">main_coin_type = #{mainCoinType},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCoinWalletById" parameterType="Long">
+        delete from coin_wallet where id = #{id}
+    </delete>
+
+    <delete id="deleteCoinWalletByIds" parameterType="String">
+        delete from coin_wallet where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <select id="selectCoinWalletByAddress" parameterType="String" resultMap="CoinWalletResult">
+        <include refid="selectCoinWalletVo"/>
+        where address = #{address} limit 1
+    </select>
+    
+    
+</mapper>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianxun.project.coin.mapper.CoinRecordMapper">
+    
+    <resultMap type="CoinRecord" id="CoinRecordResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="toId"    column="to_id"    />
+        <result property="coinId"    column="coin_id"    />
+        <result property="coinName"    column="coin_name"    />
+        <result property="incomeType"    column="income_type"    />
+        <result property="mainType"    column="main_type"    />
+        <result property="sonType"    column="son_type"    />
+        <result property="amount"    column="amount"    />
+        <result property="fromAddress"    column="from_address"    />
+        <result property="toAddress"    column="to_address"    />
+        <result property="txid"    column="txid"    />
+        <result property="memo"    column="memo"    />
+        <result property="fee"    column="fee"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectCoinRecordVo">
+        select id, user_id, to_id, coin_id, coin_name, income_type, main_type, son_type, amount, from_address, to_address, txid, memo, fee, status, create_time, update_time from coin_record
+    </sql>
+
+    <select id="selectCoinRecordList" parameterType="CoinRecord" resultMap="CoinRecordResult">
+        <include refid="selectCoinRecordVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="toId != null "> and to_id = #{toId}</if>
+            <if test="coinId != null "> and coin_id = #{coinId}</if>
+            <if test="coinName != null  and coinName != ''"> and coin_name = #{coinName}</if>
+            <if test="incomeType != null  and incomeType != ''"> and income_type = #{incomeType}</if>
+            <if test="mainType != null  and mainType != ''"> and main_type = #{mainType}</if>
+            <if test="sonType != null  and sonType != ''"> and son_type = #{sonType}</if>
+            <if test="fromAddress != null  and fromAddress != ''"> and from_address = #{fromAddress}</if>
+            <if test="toAddress != null  and toAddress != ''"> and to_address = #{toAddress}</if>
+            <if test="txid != null  and txid != ''"> and txid = #{txid}</if>
+            <if test="memo != null  and memo != ''"> and memo = #{memo}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectCoinRecordById" parameterType="Long" resultMap="CoinRecordResult">
+        <include refid="selectCoinRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCoinRecord" parameterType="CoinRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into coin_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="toId != null">to_id,</if>
+            <if test="coinId != null">coin_id,</if>
+            <if test="coinName != null">coin_name,</if>
+            <if test="incomeType != null">income_type,</if>
+            <if test="mainType != null">main_type,</if>
+            <if test="sonType != null">son_type,</if>
+            <if test="amount != null">amount,</if>
+            <if test="fromAddress != null">from_address,</if>
+            <if test="toAddress != null">to_address,</if>
+            <if test="txid != null">txid,</if>
+            <if test="memo != null">memo,</if>
+            <if test="fee != null">fee,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="toId != null">#{toId},</if>
+            <if test="coinId != null">#{coinId},</if>
+            <if test="coinName != null">#{coinName},</if>
+            <if test="incomeType != null">#{incomeType},</if>
+            <if test="mainType != null">#{mainType},</if>
+            <if test="sonType != null">#{sonType},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="fromAddress != null">#{fromAddress},</if>
+            <if test="toAddress != null">#{toAddress},</if>
+            <if test="txid != null">#{txid},</if>
+            <if test="memo != null">#{memo},</if>
+            <if test="fee != null">#{fee},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCoinRecord" parameterType="CoinRecord">
+        update coin_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="toId != null">to_id = #{toId},</if>
+            <if test="coinId != null">coin_id = #{coinId},</if>
+            <if test="coinName != null">coin_name = #{coinName},</if>
+            <if test="incomeType != null">income_type = #{incomeType},</if>
+            <if test="mainType != null">main_type = #{mainType},</if>
+            <if test="sonType != null">son_type = #{sonType},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="fromAddress != null">from_address = #{fromAddress},</if>
+            <if test="toAddress != null">to_address = #{toAddress},</if>
+            <if test="txid != null">txid = #{txid},</if>
+            <if test="memo != null">memo = #{memo},</if>
+            <if test="fee != null">fee = #{fee},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCoinRecordById" parameterType="Long">
+        delete from coin_record where id = #{id}
+    </delete>
+
+    <delete id="deleteCoinRecordByIds" parameterType="String">
+        delete from coin_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <select id="selectCoinRecordByTxId" parameterType="String" resultMap="CoinRecordResult">
+        <include refid="selectCoinRecordVo"/>
+        where txid = #{txid} and main_type = 'recharge' limit 1
+    </select>
+    
+</mapper>
